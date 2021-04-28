@@ -17,7 +17,7 @@ public class Department {
     private int id;
     @Column
     private String code;
-    @Column
+    @Column(name = "name", columnDefinition = "nvarchar")
     private String name;
 
     @OneToMany(mappedBy = "department")
