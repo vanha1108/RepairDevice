@@ -4,7 +4,7 @@ package com.company.constant;
  * Nguyễn Văn Hà
  * 3:39 PM 4/28/2021
  */
-public class Enum {
+public class EnumStatus {
 
     public static final String ADMIN = "ADMIN";
 
@@ -22,5 +22,8 @@ public class Enum {
 
     // Sau khi sửa chữa xong sẽ trả về lại phòng TCHC để lưu trữ
     public static final String FINISHED = "FINISHED";
+
+    // Trưởng phòng hoặc giám đốc không phê duyệt yêu cầu sửa chữa
+    public static final String FAILED = "FAILED";
 
 }
