@@ -4,8 +4,9 @@ package com.company.constant;
  * Nguyễn Văn Hà
  * 3:39 PM 4/28/2021
  */
-public class EnumStatus {
-
+public enum EnumStatus {
+    WAIT_MANAGER,WAIT_DIRECTOR,WAIT_TCHC,FIXING,FINISHED,FAILED
+    /*
     public static final String ADMIN = "ADMIN";
 
     // Khi nhân viên tạo yêu cầu xong và đang chờ trưởng phòng duyệt
@@ -25,5 +26,6 @@ public class EnumStatus {
 
     // Trưởng phòng hoặc giám đốc không phê duyệt yêu cầu sửa chữa
     public static final String FAILED = "FAILED";
+    */
 
 }

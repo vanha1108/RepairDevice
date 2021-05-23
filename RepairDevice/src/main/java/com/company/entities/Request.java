@@ -1,6 +1,11 @@
 package com.company.entities;
 
+import com.company.constant.EnumStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * Nguyễn Văn Hà
@@ -15,26 +20,59 @@ public class Request {
     private int id;
     @Column
     private String code;
-    @Column
+    @Column(columnDefinition ="nvarchar(300)",length = 300)
     private String reason;
-    @Column
+    @Column(columnDefinition ="nvarchar(300)",length = 300)
     private String solution;
     @Column
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @Column(name="created_date")
+    private Date createdDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    @Column(name = "last_modified_date")
+    private Date lastModifiedDate;
+
+    @JsonIgnore
+    @Column(name="modified_by")
+    private String modifiedBy;
+
+    @Column(name = "created_by")
+    private String createdBy;
 
     public Request() {
     }
 
-    public Request(String code, String reason, String solution, String status, Account account) {
+    public Request(String code, String reason, String solution, String status, String createdBy) {
         this.code = code;
         this.reason = reason;
         this.solution = solution;
         this.status = status;
-        this.account = account;
+        this.createdBy = createdBy;
     }
 
     public int getId() {
@@ -69,19 +107,19 @@ public class Request {
         this.solution = solution;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 }

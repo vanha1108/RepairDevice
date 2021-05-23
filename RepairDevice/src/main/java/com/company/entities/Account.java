@@ -1,7 +1,8 @@
 package com.company.entities;
 
+import com.company.constant.EnumRole;
+
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,37 +18,25 @@ public class Account {
     private int id;
     @Column
     private String code;
-    @Column
+    @Column(nullable = false, unique = true)
     private String username;
-    @Column
+    @Column(nullable = false, unique = true)
     private String password;
-    @Column
-    private String role;
+
+    private String roles;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "account")
-    private List<Request> requests = new ArrayList<>();
-
     public Account() {
     }
 
-    public Account(String code, String username, String password, String role, Department department, List<Request> requests) {
+    public Account(String code, String username, String password, String roles, Department department) {
         this.code = code;
         this.username = username;
         this.password = password;
-        this.role = role;
-        this.department = department;
-        this.requests = requests;
-    }
-
-    public Account(String code, String username, String password, String role, Department department) {
-        this.code = code;
-        this.username = username;
-        this.password = password;
-        this.role = role;
+        this.roles = roles;
         this.department = department;
     }
 
@@ -65,14 +54,6 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Request> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<Request> requests) {
-        this.requests = requests;
     }
 
     public int getId() {
@@ -99,11 +80,11 @@ public class Account {
         this.department = department;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

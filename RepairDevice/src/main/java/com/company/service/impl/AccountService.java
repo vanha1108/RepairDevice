@@ -1,9 +1,13 @@
 package com.company.service.impl;
 
+import com.company.configs.AccountUserDetail;
 import com.company.entities.Account;
 import com.company.repository.IAccountRepository;
 import com.company.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

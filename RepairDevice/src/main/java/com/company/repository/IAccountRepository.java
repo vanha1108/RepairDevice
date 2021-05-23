@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.entities.Account;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
