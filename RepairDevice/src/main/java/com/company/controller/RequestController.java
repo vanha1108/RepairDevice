@@ -8,13 +8,18 @@ import com.company.entities.Account;
 import com.company.entities.Request;
 import com.company.service.IAccountService;
 import com.company.service.IRequestService;
+import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,6 +27,9 @@ import java.util.List;
 public class RequestController {
     @Autowired
     private IRequestService requestService;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @Autowired
     private IAccountService accountService;
@@ -39,6 +47,15 @@ public class RequestController {
     public ResponseEntity<List<Request>> getAllOwnRequestHandled() throws Exception {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<>(requestService.findAllRequestDoneByUserLogin(account),HttpStatus.OK);
+    }
+
+    @GetMapping("/export-excel/{code}")
+    public ResponseEntity exportRequestToPdf(@Valid @PathVariable("code") String code) throws IOException, DocumentException {
+        Request requestSource = requestService.findRequestByCode(code);
+        if(requestSource != null){
+            requestService.exportPdf(requestSource);
+        }
+        return new ResponseEntity("done", HttpStatus.OK);
     }
 
     @PostMapping()

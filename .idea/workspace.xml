@@ -23,61 +23,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ffa7547-d60f-4833-bd0d-75b5e1e3f592" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_9_13.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_18_20.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_oauth_spring_security_oauth2_2_0_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_5_0_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_5_0_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_test_5_0_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_5_0_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/configs/AccountUserDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/configs/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/configs/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/configs/JwtTokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/configs/WebSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/constant/HandleStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/RequestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/repository/IRequestRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/repository/impl/RequestRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/IRequestService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/impl/RequestService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/impl/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_lowagie_itext_2_1_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ognl_ognl_3_1_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_attoparser_attoparser_2_0_5_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcmail_jdk14_1_64.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcpkix_jdk14_1_64.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk14_1_64.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bctsp_jdk14_1_46.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_0_11_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring5_3_0_11_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xhtmlrenderer_flying_saucer_core_9_1_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xhtmlrenderer_flying_saucer_pdf_9_1_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/configs/MySaucerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/resources/images/pdf-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RepairDevice/src/main/resources/models/request.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/.idea/RepairDevice.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/RepairDevice/RequestRepairDevice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/RequestRepairDevice.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RepairDevice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/constant/EnumRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/constant/EnumRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/constant/EnumStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/constant/EnumStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/DepartmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/DepartmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/entities/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/entities/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/entities/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/entities/Department.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/entities/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/entities/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/repository/IAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/repository/IAccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/impl/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/impl/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/RequestRepairDevice-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/RequestRepairDevice-1.0-SNAPSHOT.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/constant/EnumRole.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/constant/EnumRole.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/controller/RequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/IRequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/IRequestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/impl/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/src/main/java/com/company/service/impl/RequestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/controller/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/controller/AccountController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/controller/DepartmentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/controller/DepartmentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/entities/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/entities/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/entities/Department.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/entities/Department.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/entities/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/entities/Request.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/service/impl/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/service/impl/AccountService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RepairDevice/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/controller/RequestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/controller/RequestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/service/IRequestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/service/IRequestService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/service/impl/RequestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/RepairDevice/target/classes/com/company/service/impl/RequestService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +59,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -112,6 +84,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -121,7 +94,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/RepairDevice/src/main/resources/images" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
   </component>
@@ -131,11 +104,27 @@
       <recent name="com.company.service.impl" />
       <recent name="com.company.configs" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Java\Spring\RepairDevice\RepairDevice\src\main\resources\images" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.company.configs" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="RequestRepairDevice" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.company.Main" />
@@ -167,6 +156,8 @@
       <workItem from="1621750304976" duration="4572000" />
       <workItem from="1621755745655" duration="9010000" />
       <workItem from="1621775983826" duration="9933000" />
+      <workItem from="1621824821753" duration="9158000" />
+      <workItem from="1621844035912" duration="3367000" />
     </task>
     <servers />
   </component>

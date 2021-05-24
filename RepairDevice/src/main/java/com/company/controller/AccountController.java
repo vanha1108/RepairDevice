@@ -16,9 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Nguyễn Văn Hà
@@ -36,7 +34,7 @@ public class AccountController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity loginAccount(@Valid @RequestBody Account account){
         // Xác thực từ username và password.
         Authentication authentication = authenticationManager.authenticate(
@@ -54,7 +52,10 @@ public class AccountController {
         String jwt = tokenProvider.generateToken((AccountUserDetail) authentication.getPrincipal());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization","Bearer "+jwt);
-        return new ResponseEntity("true",httpHeaders,HttpStatus.OK);
+
+        AccountUserDetail accountLogin = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return new ResponseEntity(accountLogin,httpHeaders,HttpStatus.OK);
     }
 
     @GetMapping("/test-jwt")
@@ -118,9 +119,5 @@ public class AccountController {
     public ResponseEntity<?> getAllAccount() {
         List<Account> accounts = accountService.findAll();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
-    }
-
-    private boolean checkTokenIsValid(String token){
-        return  true;
     }
 }

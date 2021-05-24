@@ -3,13 +3,19 @@ package com.company.service.impl;
 import com.company.configs.AccountUserDetail;
 import com.company.constant.EnumStatus;
 import com.company.constant.HandleStatus;
-import com.company.entities.Account;
 import com.company.entities.Request;
 import com.company.repository.IRequestRepository;
 import com.company.service.IRequestService;
+import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 @Service
@@ -19,6 +25,9 @@ public class RequestService implements IRequestService {
 
     @Autowired
     private HandleStatus handleStatus;
+
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Override
     public Request addRequestFixDivice(AccountUserDetail accountUserDetail, Request requestBody) throws Exception {
@@ -112,6 +121,24 @@ public class RequestService implements IRequestService {
         request.setLastModifiedDate(new Date());
         request.setModifiedBy(accountUserDetail.getAccountCode());
         requestRepository.updateRequest(request);
+    }
+
+    @Override
+    public void exportPdf(Request request) throws IOException, DocumentException {
+        Context context = new Context();
+        context.setVariable("reason",request.getReason());
+        context.setVariable("solution",request.getSolution());
+        System.out.println(context.getVariable("reason"));
+        System.out.println(context.getVariable("solution"));
+        String processHtml = templateEngine.process("request",context);
+
+        OutputStream outputStream = new FileOutputStream("request.pdf");
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(processHtml);
+        renderer.layout();
+        renderer.createPDF(outputStream,false);
+        renderer.finishPDF();
+        outputStream.close();
     }
 
 }

@@ -2,7 +2,11 @@ package com.company.service;
 
 import com.company.configs.AccountUserDetail;
 import com.company.entities.Request;
+import com.lowagie.text.DocumentException;
 
+import javax.servlet.ServletContext;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,4 +28,6 @@ public interface IRequestService extends Serializable{
     public void  approveRequest(AccountUserDetail accountUserDetail, Request request);
 
     public  void  finishRequest(AccountUserDetail accountUserDetail, Request request);
+
+    void exportPdf(Request request) throws IOException, DocumentException;
 }
