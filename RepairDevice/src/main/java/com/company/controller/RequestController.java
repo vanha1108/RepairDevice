@@ -40,13 +40,13 @@ public class RequestController {
     @GetMapping("/not-handled")
     public ResponseEntity<List<Request>> getAllOwnRequest() throws Exception {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResponseEntity<>(requestService.findAllRequestByUserLogin(account),HttpStatus.OK);
+        return new ResponseEntity<>(requestService.findAllRequestNotHandle(account),HttpStatus.OK);
     }
 
     @GetMapping("/handled")
     public ResponseEntity<List<Request>> getAllOwnRequestHandled() throws Exception {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResponseEntity<>(requestService.findAllRequestDoneByUserLogin(account),HttpStatus.OK);
+        return new ResponseEntity<>(requestService.findAllRequestNotHandle(account),HttpStatus.OK);
     }
 
     @GetMapping("/export-excel/{code}")

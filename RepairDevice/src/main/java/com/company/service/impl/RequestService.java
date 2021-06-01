@@ -1,10 +1,13 @@
 package com.company.service.impl;
 
 import com.company.configs.AccountUserDetail;
+import com.company.constant.EnumRole;
 import com.company.constant.EnumStatus;
 import com.company.constant.HandleStatus;
+import com.company.entities.Account;
 import com.company.entities.Request;
 import com.company.repository.IRequestRepository;
+import com.company.service.IAccountService;
 import com.company.service.IRequestService;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class RequestService implements IRequestService {
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    private IAccountService accountService;
 
     @Override
     public Request addRequestFixDivice(AccountUserDetail accountUserDetail, Request requestBody) throws Exception {
@@ -58,28 +64,49 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public List<Request> findAllRequestByUserLogin(AccountUserDetail accountUserDetail) throws Exception {
+    public List<Request> findAllRequestNotHandle(AccountUserDetail accountUserDetail) throws Exception {
         try {
             String role =String.valueOf(accountUserDetail.getAuthorities());
             role = role.replace("[","").replace("]","");
-            String status = handleStatus.getStatusApprove(role);
-            return  requestRepository.findAllRequestNotAcceptOrWaiting(accountUserDetail.getAccountCode(),status);
+            String status = handleStatus.getStatusBeforeHandle(role);
+
+            List<Request> requestList;
+            System.out.println("Initial");
+            if(role.equals(EnumRole.MANAGER.toString())){
+                requestList = requestRepository.findAllRequestNotAcceptOrWaiting(accountUserDetail.getDepartment().getId(),"",status);
+                System.out.println("Get complete");
+            }else if(role.equals(EnumRole.EMPLOYEE.toString())){
+                requestList = requestRepository.findAllRequestNotAcceptOrWaiting(-1,accountUserDetail.getAccountCode(),status);
+            }else {
+                requestList = requestRepository.findAllRequestNotAcceptOrWaiting(-1,"",status);
+            }
+            return requestList;
         }catch(Exception a){
-            throw new Exception("Error login token");
+            throw new Exception(a.toString());
         }
     }
 
-    @Override
-    public List<Request> findAllRequestDoneByUserLogin(AccountUserDetail accountUserDetail) throws Exception {
-        try {
-            String role =String.valueOf(accountUserDetail.getAuthorities());
-            role = role.replace("[","").replace("]","");
-            String status = handleStatus.getStatusHandled(role);
-            return  requestRepository.findAllRequestNotAcceptOrWaiting(accountUserDetail.getAccountCode(),status);
-        }catch(Exception a){
-            throw new Exception("Error login token");
-        }
-    }
+//    @Override
+//    public List<Request> findAllRequestDoneByUserLogin(AccountUserDetail accountUserDetail) throws Exception {
+//        try {
+//            String role =String.valueOf(accountUserDetail.getAuthorities());
+//            role = role.replace("[","").replace("]","");
+//            String status = handleStatus.getStatusHandled(role);
+//
+//            List<Request> requestListDone;
+//
+//            if(role.equals(EnumRole.MANAGER.toString())){
+//                requestListDone = requestRepository.findAllRequestNotAcceptOrWaiting(accountUserDetail.getDepartment().getId(),"",status);
+//            }else if(role.equals(EnumRole.EMPLOYEE.toString())){
+//                requestListDone = requestRepository.findAllRequestNotAcceptOrWaiting(-1,accountUserDetail.getAccountCode(),status);
+//            }else {
+//                requestListDone = requestRepository.findAllRequestNotAcceptOrWaiting(-1,"",status);
+//            }
+//            return requestListDone;
+//        }catch(Exception a){
+//            throw new Exception("Error login token");
+//        }
+//    }
 
     @Override
     public Request updateRequest(AccountUserDetail accountUserDetail, Request requestSource, Request requestUpdate) {
@@ -109,7 +136,7 @@ public class RequestService implements IRequestService {
 
     @Override
     public void approveRequest(AccountUserDetail accountUserDetail, Request request) {
-        request.setStatus(handleStatus.getStatusApprove(accountUserDetail.getRole()));
+        request.setStatus(handleStatus.getStatusApproved(accountUserDetail.getRole()));
         request.setLastModifiedDate(new Date());
         request.setModifiedBy(accountUserDetail.getAccountCode());
         requestRepository.updateRequest(request);

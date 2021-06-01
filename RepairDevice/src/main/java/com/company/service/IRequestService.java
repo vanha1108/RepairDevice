@@ -15,9 +15,9 @@ public interface IRequestService extends Serializable{
 
     public Request findRequestByCode(String code);
 
-    List<Request> findAllRequestByUserLogin(AccountUserDetail accountUserDetail) throws Exception;
+    List<Request> findAllRequestNotHandle(AccountUserDetail accountUserDetail) throws Exception;
 
-    List<Request> findAllRequestDoneByUserLogin(AccountUserDetail accountUserDetail) throws Exception;
+//    List<Request> findAllRequestDoneByUserLogin(AccountUserDetail accountUserDetail) throws Exception;
 
     public Request updateRequest(AccountUserDetail accountUserDetail, Request requestSource, Request requestUpdate);
 

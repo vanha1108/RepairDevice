@@ -9,21 +9,21 @@ import java.util.Map;
 public class HandleStatus {
    // private ArrayList<Pair<String,String>> lst = new ArrayList<Pair<String,String>>();
   //  private ArrayList<Pair<String,String>> lstDone = new ArrayList<Pair<String,String>>();
-    private HashMap<String,String> hlstApprove = new HashMap<String,String>();
+    private HashMap<String,String> hlstApproveed = new HashMap<String,String>();
     private HashMap<String,String> hlstDone = new HashMap<String,String>();
     private HashMap<String,String> hlstBeforeHandle = new HashMap<String,String>();
 
     public HandleStatus() {
-        hlstApprove.put("EMPLOYEE","WAIT_MANAGER");
-        hlstApprove.put("MANAGER","WAIT_DIRECTOR");
-        hlstApprove.put("DIRECTOR","WAIT_TCHC");
-        hlstApprove.put("TCHC","FIXING");
+        hlstApproveed.put("EMPLOYEE","WAIT_MANAGER");
+        hlstApproveed.put("MANAGER","WAIT_DIRECTOR");
+        hlstApproveed.put("DIRECTOR","WAIT_TCHC");
+        hlstApproveed.put("TCHC","FIXING");
 
         hlstDone.put("EMPLOYEE","FAILED");
         hlstDone.put("DIRECTOR","FINISHED");
         hlstDone.put("TCHC","FINISHED");
 
-        hlstBeforeHandle.put("EMPLOYEE","");
+        hlstBeforeHandle.put("EMPLOYEE","WAIT_MANAGER");
         hlstBeforeHandle.put("MANAGER","WAIT_MANAGER");
         hlstBeforeHandle.put("DIRECTOR","WAIT_DIRECTOR");
         hlstBeforeHandle.put("TCHC","WAIT_TCHC");
@@ -38,8 +38,8 @@ public class HandleStatus {
         return "";
     }
 
-    public String getStatusApprove(String role){
-        for (Map.Entry<String, String> entry : hlstApprove.entrySet()) {
+    public String getStatusApproved(String role){
+        for (Map.Entry<String, String> entry : hlstApproveed.entrySet()) {
             if(entry.getKey().equals(role)){
                 return entry.getValue();
             }

@@ -41,12 +41,23 @@ public class RequestRepository implements IRequestRepository {
     }
 
     @Override
-    public List<Request> findAllRequestNotAcceptOrWaiting(String code, String status) {
-        System.out.println(code);
-        System.out.println(status);
-        Query query = entityManager.createQuery("select r from Request r where r.createdBy=:code or r.modifiedBy =:code and r.status=:status");
-        query.setParameter("code", code);
-        query.setParameter("status",status);
+    public List<Request> findAllRequestNotAcceptOrWaiting(int department_id, String code, String status) {
+        Query query;
+        if (department_id != -1) {
+            query = entityManager.createQuery("select request from  Request request,Account account where " +
+                    "request.status =:status and account.code = request.createdBy and account.department.id =:department_id");
+
+            query.setParameter("status", status);
+            query.setParameter("department_id", department_id);
+        } else if (!code.equals("")) {
+            query = entityManager.createQuery("select request from  Request request where request.createdBy =:code and request.status =:status");
+            query.setParameter("status", status);
+            query.setParameter("code", code);
+        } else {
+            query = entityManager.createQuery("select r from Request r where  r.status=:status");
+            query.setParameter("status", status);
+        }
+
         List<Request> lst = query.getResultList();
         return lst;
     }

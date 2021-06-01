@@ -13,7 +13,7 @@ public interface IRequestRepository extends Serializable {
     void deleteRequest(Request request);
     Request findRequestByCode(String code);
 
-    List<Request> findAllRequestNotAcceptOrWaiting(String code, String status);
+    List<Request> findAllRequestNotAcceptOrWaiting(int department_id,String code, String status);
 
 
 }
