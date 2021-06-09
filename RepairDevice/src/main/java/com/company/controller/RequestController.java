@@ -89,10 +89,10 @@ public class RequestController {
                     return new ResponseEntity<>("rejected",HttpStatus.OK);
                 }
             }
-            if(accountLogin.getAccount().equals(EnumRole.MANAGER.toString())){
+            if(accountLogin.getAccount().getRoles().equals(EnumRole.MANAGER.toString())){
                 if(requestSource.getStatus().equals(handleStatus.getStatusBeforeHandle(accountLogin.getRole()))){
                     Account account = accountService.findByCode(requestSource.getCreatedBy());
-                    if(accountLogin.getDepartment().toString().equals(account.getDepartment().toString())){
+                    if(accountLogin.getDepartment().getId() == account.getDepartment().getId()){
                         requestService.rejectRequest(accountLogin,requestSource);
                         return new ResponseEntity<>("rejected",HttpStatus.OK);
                     }
@@ -111,7 +111,7 @@ public class RequestController {
             if(requestSource.getStatus().equals(handleStatus.getStatusBeforeHandle(accountLogin.getRole()))){
                 if(accountLogin.getRole().equals(EnumRole.MANAGER.toString())){
                     Account account = accountService.findByCode(requestSource.getCreatedBy());
-                    if(accountLogin.getDepartment().toString().equals(account.getDepartment().toString())){
+                    if(accountLogin.getDepartment().getId() == account.getDepartment().getId()){
                         requestService.approveRequest(accountLogin,requestSource);
                         return new ResponseEntity("approved",HttpStatus.OK);
                     }
@@ -120,6 +120,7 @@ public class RequestController {
                     }
                 }
                 requestService.approveRequest(accountLogin,requestSource);
+                return new ResponseEntity("approved",HttpStatus.OK);
             }
             return new ResponseEntity("Permission denied",HttpStatus.UNAUTHORIZED);
         }
