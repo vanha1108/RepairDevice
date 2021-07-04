@@ -4,6 +4,7 @@ import com.company.configs.AccountUserDetail;
 import com.company.configs.JwtTokenProvider;
 import com.company.entities.Account;
 import com.company.service.IAccountService;
+import com.company.storage.UserStorage;
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -55,9 +56,17 @@ public class AccountController {
 
         AccountUserDetail accountLogin = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        UserStorage.getInstance().setUsers(accountLogin.getAccountCode(),accountLogin.getRole());
+
         return new ResponseEntity(accountLogin,httpHeaders,HttpStatus.OK);
     }
 
+    @PostMapping("/log-out")
+    public  ResponseEntity logOut(){
+        AccountUserDetail accountLogin = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserStorage.getInstance().removeUser(accountLogin.getAccountCode());
+        return new ResponseEntity(HttpStatus.OK);
+    }
     @GetMapping("/test-jwt")
     public  ResponseEntity testToken(@RequestHeader String Authorization){
        AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

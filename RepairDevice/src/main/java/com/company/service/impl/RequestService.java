@@ -9,8 +9,10 @@ import com.company.entities.Request;
 import com.company.repository.IRequestRepository;
 import com.company.service.IAccountService;
 import com.company.service.IRequestService;
+import com.company.storage.UserStorage;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -27,13 +29,16 @@ public class RequestService implements IRequestService {
     private IRequestRepository requestRepository;
 
     @Autowired
+    private IAccountService accountService;
+
+    @Autowired
     private HandleStatus handleStatus;
 
     @Autowired
     private TemplateEngine templateEngine;
 
     @Autowired
-    private IAccountService accountService;
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     public Request addRequestFixDivice(AccountUserDetail accountUserDetail, Request requestBody) throws Exception {
@@ -51,6 +56,17 @@ public class RequestService implements IRequestService {
            requestBody.setCreatedBy(accountUserDetail.getAccountCode());
            requestBody.setModifiedBy(accountUserDetail.getAccountCode());
            requestRepository.saveRequest(requestBody);
+
+           String someone="";
+           HashMap<String,String> users = UserStorage.getInstance().getUsers();
+           for (Map.Entry<String, String> entry : users.entrySet()) {
+               if(entry.getValue().equals(EnumStatus.WAIT_MANAGER.toString())){
+                   Account account = accountService.findByCode(entry.getKey());
+                   if(account.getDepartment().getId() == accountUserDetail.getDepartment().getId()){
+                       simpMessagingTemplate.convertAndSend("/data/request/"+entry.getKey(),"data change");
+                   }
+               }
+           }
            return requestBody;
        }catch(Exception a) {
            throw new Exception("Data is not execute valid before request");
@@ -71,10 +87,8 @@ public class RequestService implements IRequestService {
             String status = handleStatus.getStatusBeforeHandle(role);
 
             List<Request> requestList;
-            System.out.println("Initial");
             if(role.equals(EnumRole.MANAGER.toString())){
                 requestList = requestRepository.findAllRequestNotAcceptOrWaiting(accountUserDetail.getDepartment().getId(),"",status);
-                System.out.println("Get complete");
             }else if(role.equals(EnumRole.EMPLOYEE.toString())){
                 requestList = requestRepository.findAllRequestNotAcceptOrWaiting(-1,accountUserDetail.getAccountCode(),status);
             }else {
