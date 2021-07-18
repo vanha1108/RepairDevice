@@ -8,10 +8,12 @@ import com.company.entities.Account;
 import com.company.entities.Request;
 import com.company.service.IAccountService;
 import com.company.service.IRequestService;
+import com.company.storage.UserStorage;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -37,6 +40,9 @@ public class RequestController {
     @Autowired
     private HandleStatus handleStatus;
 
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
     @GetMapping("/not-handled")
     public ResponseEntity<List<Request>> getAllOwnRequest() throws Exception {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -49,7 +55,7 @@ public class RequestController {
         return new ResponseEntity<>(requestService.findAllRequestNotHandle(account),HttpStatus.OK);
     }
 
-    @GetMapping("/export-excel/{code}")
+    @GetMapping("/export-pdf/{code}")
     public ResponseEntity exportRequestToPdf(@Valid @PathVariable("code") String code) throws IOException, DocumentException {
         Request requestSource = requestService.findRequestByCode(code);
         if(requestSource != null){
@@ -62,6 +68,22 @@ public class RequestController {
     public ResponseEntity<Request> addRequest(@RequestBody Request request) throws Exception {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Request requestAdded = requestService.addRequestFixDivice(account,request);
+
+
+        //send socket to client
+        HashMap<String,String> users = UserStorage.getInstance().getUsers();
+        users.forEach((key,value) ->{
+            if(value.equals(EnumRole.MANAGER.toString())){
+                Account accountManager = accountService.findByCode(key);
+                if(accountManager != null){
+                    if(accountManager.getDepartment().getId()==account.getDepartment().getId())
+                    {
+                        simpMessagingTemplate.convertAndSend("/data/request/"+key,"new request");
+                    }
+                }
+            }
+        });
+
         return new ResponseEntity<>(requestAdded, HttpStatus.CREATED);
     }
 
