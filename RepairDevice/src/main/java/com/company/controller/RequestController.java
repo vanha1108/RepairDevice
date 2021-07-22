@@ -71,7 +71,7 @@ public class RequestController {
 
 
         //send socket to client
-        HashMap<String,String> users = UserStorage.getInstance().getUsers();
+       /* HashMap<String,String> users = UserStorage.getInstance().getUsers();
         users.forEach((key,value) ->{
             if(value.equals(EnumRole.MANAGER.toString())){
                 Account accountManager = accountService.findByCode(key);
@@ -82,7 +82,7 @@ public class RequestController {
                     }
                 }
             }
-        });
+        });*/
 
         return new ResponseEntity<>(requestAdded, HttpStatus.CREATED);
     }

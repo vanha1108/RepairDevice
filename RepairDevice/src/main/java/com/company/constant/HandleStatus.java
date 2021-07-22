@@ -55,4 +55,16 @@ public class HandleStatus {
         return "";
     }
 
+    public String getRoleByStatusRequest(String status){
+        if(status.equals("WAIT_MANAGER")){
+            return "MANAGER";
+        }
+        for (Map.Entry<String, String> entry : hlstBeforeHandle.entrySet()) {
+            if(entry.getValue().equals(status)){
+                return entry.getKey();
+            }
+        }
+        return "null";
+    }
+
 }

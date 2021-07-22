@@ -57,16 +57,8 @@ public class RequestService implements IRequestService {
            requestBody.setModifiedBy(accountUserDetail.getAccountCode());
            requestRepository.saveRequest(requestBody);
 
-           String someone="";
-           HashMap<String,String> users = UserStorage.getInstance().getUsers();
-           for (Map.Entry<String, String> entry : users.entrySet()) {
-               if(entry.getValue().equals(EnumStatus.WAIT_MANAGER.toString())){
-                   Account account = accountService.findByCode(entry.getKey());
-                   if(account.getDepartment().getId() == accountUserDetail.getDepartment().getId()){
-                       simpMessagingTemplate.convertAndSend("/data/request/"+entry.getKey(),"data change");
-                   }
-               }
-           }
+           sendSocketMessage(requestBody,1,"new request",200);//goi gui tin nhan socket
+
            return requestBody;
        }catch(Exception a) {
            throw new Exception("Data is not execute valid before request");
@@ -99,29 +91,7 @@ public class RequestService implements IRequestService {
             throw new Exception(a.toString());
         }
     }
-
-//    @Override
-//    public List<Request> findAllRequestDoneByUserLogin(AccountUserDetail accountUserDetail) throws Exception {
-//        try {
-//            String role =String.valueOf(accountUserDetail.getAuthorities());
-//            role = role.replace("[","").replace("]","");
-//            String status = handleStatus.getStatusHandled(role);
-//
-//            List<Request> requestListDone;
-//
-//            if(role.equals(EnumRole.MANAGER.toString())){
-//                requestListDone = requestRepository.findAllRequestNotAcceptOrWaiting(accountUserDetail.getDepartment().getId(),"",status);
-//            }else if(role.equals(EnumRole.EMPLOYEE.toString())){
-//                requestListDone = requestRepository.findAllRequestNotAcceptOrWaiting(-1,accountUserDetail.getAccountCode(),status);
-//            }else {
-//                requestListDone = requestRepository.findAllRequestNotAcceptOrWaiting(-1,"",status);
-//            }
-//            return requestListDone;
-//        }catch(Exception a){
-//            throw new Exception("Error login token");
-//        }
-//    }
-
+    
     @Override
     public Request updateRequest(AccountUserDetail accountUserDetail, Request requestSource, Request requestUpdate) {
         requestSource.setSolution(requestUpdate.getSolution());
@@ -131,6 +101,7 @@ public class RequestService implements IRequestService {
         requestSource.setStatus(EnumStatus.WAIT_MANAGER.toString());
         requestRepository.updateRequest(requestSource);
 
+        sendSocketMessage(requestSource,1,"update request",200);//goi gui tin nhan socket
         return requestSource;
     }
 
@@ -140,6 +111,8 @@ public class RequestService implements IRequestService {
         request.setLastModifiedDate(new Date());
         request.setModifiedBy(accountUserDetail.getAccountCode());
         requestRepository.updateRequest(request);
+
+        sendSocketMessage(request,0,"request reject",200);//goi gui tin nhan socket
     }
 
     @Override
@@ -154,6 +127,8 @@ public class RequestService implements IRequestService {
         request.setLastModifiedDate(new Date());
         request.setModifiedBy(accountUserDetail.getAccountCode());
         requestRepository.updateRequest(request);
+
+        sendSocketMessage(request,1,"new request",200);//goi gui tin nhan socket
     }
 
     @Override
@@ -169,8 +144,6 @@ public class RequestService implements IRequestService {
         Context context = new Context();
         context.setVariable("reason",request.getReason());
         context.setVariable("solution",request.getSolution());
-        System.out.println(context.getVariable("reason"));
-        System.out.println(context.getVariable("solution"));
         String processHtml = templateEngine.process("request",context);
 
         OutputStream outputStream = new FileOutputStream("request.pdf");
@@ -182,4 +155,38 @@ public class RequestService implements IRequestService {
         outputStream.close();
     }
 
+    //Gửi thông tin thay đổi data đến đích đến sắp tới
+    //status: nếu =1 thì request approved, còn lại là reject
+    private void sendSocketMessage(Request requestHandled,Integer status,String message, Integer codeID){
+        if(status==1){ //gui tin nhan toi nguoi pending
+            String role = handleStatus.getRoleByStatusRequest(requestHandled.getStatus());
+
+            boolean flagSend = true;
+            HashMap<String,String> users = UserStorage.getInstance().getUsers();
+
+            for (Map.Entry<String, String> entry : users.entrySet()) {
+                flagSend = true;
+                if(entry.getValue().equals((role))){
+
+                    //Kiem tra chung phong neu la manager
+                    if(role.equals(EnumRole.MANAGER.toString())){
+                        Account account = accountService.findByCode(entry.getKey());
+                        Account accountCreateRequest = accountService.findByCode(requestHandled.getCreatedBy());
+
+                        if(account.getDepartment().getId() != accountCreateRequest.getDepartment().getId()){
+                            flagSend = false;
+                        }
+                    }
+
+                    if(flagSend){
+                        simpMessagingTemplate.convertAndSend("/data/request/"+entry.getKey(),message);
+                    }
+                }
+            }
+        }
+        else {
+            simpMessagingTemplate.convertAndSend("/data/request/"+requestHandled.getCreatedBy(),message);
+        }
+
+    }
 }
