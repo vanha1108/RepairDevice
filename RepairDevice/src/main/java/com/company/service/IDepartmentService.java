@@ -22,4 +22,6 @@ public interface IDepartmentService extends Serializable {
     List<Department> findAll();
 
     Department findByName(String name);
+
+    List<Department> getDerpartmentFixRole();
 }

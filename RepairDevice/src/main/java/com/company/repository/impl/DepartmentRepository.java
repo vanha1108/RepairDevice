@@ -58,4 +58,12 @@ public class DepartmentRepository implements IDepartmentRepository {
         List<Department> lst = query.getResultList();
         return lst.isEmpty() ? null : lst.get(0);
     }
+
+    @Override
+    public List<Department> findDepartmentByType(Integer i) {
+        Query query = entityManager.createQuery("select d from Department d where d.type =:i");
+        query.setParameter("i", i);
+        List<Department> lst = query.getResultList();
+        return lst;
+    }
 }

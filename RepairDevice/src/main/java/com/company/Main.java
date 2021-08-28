@@ -73,6 +73,35 @@ public class Main implements CommandLineRunner {
             tchc.setDepartment(department);
             accountRepository.save(tchc);
         }
+        if(departmentRepository.findAll().stream().count() <=1){
+            Department department = new Department();
+            department.setCode(UUID.randomUUID().toString());
+            department.setName("Sửa chữa phần cứng");
+            department.setType(-1);
+            departmentRepository.save(department);
+
+            Account manager = new Account();
+            manager.setCode(UUID.randomUUID().toString());
+            manager.setUsername("managerRoomFix1");
+            manager.setPassword(passwordEncoder.encode("managerRoomFix1"));
+            manager.setRoles(EnumRole.MANAGER.toString());
+            manager.setDepartment(department);
+            accountRepository.save(manager);
+
+            Department department2 = new Department();
+            department2.setCode(UUID.randomUUID().toString());
+            department2.setName("Tư vấn, lắp đặt phần cứng");
+            department2.setType(-1);
+            departmentRepository.save(department2);
+
+            Account manager2 = new Account();
+            manager2.setCode(UUID.randomUUID().toString());
+            manager2.setUsername("managerRoomFix2");
+            manager2.setPassword(passwordEncoder.encode("managerRoomFix2"));
+            manager2.setRoles(EnumRole.MANAGER.toString());
+            manager2.setDepartment(department2);
+            accountRepository.save(manager2);
+        }
     }
 
 

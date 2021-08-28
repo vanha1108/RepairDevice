@@ -19,4 +19,7 @@ public interface IAccountRepository extends Serializable {
     List<Account> findAll();
     Account findByUsername(String username);
     Account findById(int id);
+    Account findByDepartmentId(int id);
+
+    Account findAccountTCHC();
 }

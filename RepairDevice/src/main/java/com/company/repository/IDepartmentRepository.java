@@ -17,4 +17,6 @@ public interface IDepartmentRepository extends Serializable {
     Department findByCode(String code);
     List<Department> findAll();
     Department findByName(String name);
+
+    List<Department> findDepartmentByType(Integer i);
 }

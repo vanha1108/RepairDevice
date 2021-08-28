@@ -20,15 +20,19 @@ public class Department {
     @Column(name = "name", columnDefinition = "nvarchar(100)",length = 100)
     private String name;
 
+    @Column
+    private Integer type;
+
 //    @OneToMany(mappedBy = "department")
 //    private List<Account> accounts = new ArrayList<>();
 
     public Department() {
     }
 
-    public Department(String code, String name) {
+    public Department(String code, String name, Integer type) {
         this.code = code;
         this.name = name;
+        this.type = type;
     }
 
 //    public List<Account> getAccounts() {
@@ -38,6 +42,14 @@ public class Department {
 //    public void setAccounts(List<Account> accounts) {
 //        this.accounts = accounts;
 //    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

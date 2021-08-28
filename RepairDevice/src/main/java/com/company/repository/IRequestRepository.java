@@ -16,4 +16,5 @@ public interface IRequestRepository extends Serializable {
     List<Request> findAllRequestNotAcceptOrWaiting(int department_id,String code, String status);
 
 
+    List<Request> findAllRequestFinished();
 }

@@ -76,4 +76,9 @@ public class DepartmentController {
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
+    @GetMapping("/department/fix-room")
+    public ResponseEntity<?> getDepartmentFixRole(){
+        return new ResponseEntity<>(departmentService.getDerpartmentFixRole(),HttpStatus.OK);
+    }
+
 }

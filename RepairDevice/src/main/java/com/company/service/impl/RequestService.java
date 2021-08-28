@@ -5,6 +5,7 @@ import com.company.constant.EnumRole;
 import com.company.constant.EnumStatus;
 import com.company.constant.HandleStatus;
 import com.company.entities.Account;
+import com.company.entities.Department;
 import com.company.entities.Request;
 import com.company.repository.IRequestRepository;
 import com.company.service.IAccountService;
@@ -12,6 +13,7 @@ import com.company.service.IRequestService;
 import com.company.storage.UserStorage;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -153,6 +155,39 @@ public class RequestService implements IRequestService {
         renderer.createPDF(outputStream,false);
         renderer.finishPDF();
         outputStream.close();
+    }
+
+    @Override
+    public void assignRequestForDepartment(Department department, String request) {
+        Account account = accountService.findUserByDepartmentId(department.getId());
+        if(account != null){
+            Request request1 = requestRepository.findRequestByCode(request);
+            request1.setStatus(EnumStatus.FIXING.toString());
+            requestRepository.updateRequest(request1);
+            try{
+
+            }catch (Exception ex){
+                simpMessagingTemplate.convertAndSend("/data/request/"+account.getCode(),"new request assgin");
+            }
+        }
+    }
+
+    @Override
+    public void finishRequestByFixer(Request request1) {
+        request1.setStatus(EnumStatus.FINISHED.toString());
+        requestRepository.updateRequest(request1);
+
+        try{
+            Account account = accountService.findAccountTCHC();
+            simpMessagingTemplate.convertAndSend("/data/request/"+account.getCode(),"new request finish");
+        }catch (Exception ex) {
+
+        }
+    }
+
+    @Override
+    public List<Request> findRequestFinshed() {
+        return requestRepository.findAllRequestFinished();
     }
 
     //Gửi thông tin thay đổi data đến đích đến sắp tới

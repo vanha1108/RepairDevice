@@ -68,4 +68,14 @@ public class AccountService implements IAccountService {
     public Account findById(int id) {
         return accountRepository.findById(id);
     }
+
+    @Override
+    public Account findUserByDepartmentId(int id) {
+        return accountRepository.findByDepartmentId(id);
+    }
+
+    @Override
+    public Account findAccountTCHC() {
+        return accountRepository.findAccountTCHC();
+    }
 }

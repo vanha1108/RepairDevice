@@ -25,4 +25,8 @@ public interface IAccountService extends Serializable {
     Account findByUsername(String username);
 
     Account findById(int id);
+
+    Account findUserByDepartmentId(int id);
+
+    Account findAccountTCHC();
 }

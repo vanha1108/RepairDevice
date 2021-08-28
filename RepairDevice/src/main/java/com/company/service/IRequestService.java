@@ -1,33 +1,39 @@
 package com.company.service;
 
 import com.company.configs.AccountUserDetail;
+import com.company.entities.Department;
 import com.company.entities.Request;
 import com.lowagie.text.DocumentException;
+import org.springframework.http.ResponseEntity;
 
-import javax.servlet.ServletContext;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 public interface IRequestService extends Serializable{
-    public Request addRequestFixDivice(AccountUserDetail accountUserDetail, Request requestBody) throws Exception;
+    Request addRequestFixDivice(AccountUserDetail accountUserDetail, Request requestBody) throws Exception;
 
-    public Request findRequestByCode(String code);
+     Request findRequestByCode(String code);
 
     List<Request> findAllRequestNotHandle(AccountUserDetail accountUserDetail) throws Exception;
 
 //    List<Request> findAllRequestDoneByUserLogin(AccountUserDetail accountUserDetail) throws Exception;
 
-    public Request updateRequest(AccountUserDetail accountUserDetail, Request requestSource, Request requestUpdate);
+     Request updateRequest(AccountUserDetail accountUserDetail, Request requestSource, Request requestUpdate);
 
-    public void rejectRequest(AccountUserDetail accountUserDetail,Request request);
+     void rejectRequest(AccountUserDetail accountUserDetail,Request request);
 
-    public void deleteRequest(Request request);
+     void deleteRequest(Request request);
 
-    public void  approveRequest(AccountUserDetail accountUserDetail, Request request);
+     void  approveRequest(AccountUserDetail accountUserDetail, Request request);
 
-    public  void  finishRequest(AccountUserDetail accountUserDetail, Request request);
+      void  finishRequest(AccountUserDetail accountUserDetail, Request request);
 
     void exportPdf(Request request) throws IOException, DocumentException;
+
+    void assignRequestForDepartment(Department department, String request);
+
+    void finishRequestByFixer(Request request1);
+
+    List<Request> findRequestFinshed();
 }

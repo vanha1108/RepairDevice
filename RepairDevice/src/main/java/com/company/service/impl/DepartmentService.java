@@ -57,4 +57,9 @@ public class DepartmentService implements IDepartmentService {
     public Department findByName(String name) {
         return departmentRepository.findByName(name);
     }
+
+    @Override
+    public List<Department> getDerpartmentFixRole() {
+        return departmentRepository.findDepartmentByType(-1);
+    }
 }

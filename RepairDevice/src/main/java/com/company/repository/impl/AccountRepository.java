@@ -66,4 +66,19 @@ public class AccountRepository implements IAccountRepository {
         List<Account> lst = query.getResultList();
         return lst.isEmpty() ? null : lst.get(0);
     }
+
+    @Override
+    public Account findByDepartmentId(int id) {
+        Query query = entityManager.createQuery("SELECT a FROM Account a WHERE a.department.id =:id and a.roles = 'FIXER'");
+        query.setParameter("id", id);
+        List<Account> lst = query.getResultList();
+        return lst.isEmpty() ? null : lst.get(0);
+    }
+
+    @Override
+    public Account findAccountTCHC() {
+        Query query = entityManager.createQuery("SELECT a FROM Account a WHERE a.roles = 'TCHC'");
+        List<Account> lst = query.getResultList();
+        return lst.isEmpty() ? null : lst.get(0);
+    }
 }

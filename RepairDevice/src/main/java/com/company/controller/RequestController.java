@@ -5,13 +5,17 @@ import com.company.constant.EnumRole;
 import com.company.constant.EnumStatus;
 import com.company.constant.HandleStatus;
 import com.company.entities.Account;
+import com.company.entities.Department;
 import com.company.entities.Request;
 import com.company.service.IAccountService;
+import com.company.service.IDepartmentService;
 import com.company.service.IRequestService;
 import com.company.storage.UserStorage;
 import com.lowagie.text.DocumentException;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,10 +36,10 @@ public class RequestController {
     private IRequestService requestService;
 
     @Autowired
-    private ServletContext servletContext;
+    private IAccountService accountService;
 
     @Autowired
-    private IAccountService accountService;
+    private IDepartmentService departmentService;
 
     @Autowired
     private HandleStatus handleStatus;
@@ -174,5 +178,56 @@ public class RequestController {
             return new ResponseEntity("Permission denied",HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity("Not found",HttpStatus.NOT_FOUND);
+    }
+
+    //Tchc assgin request for Department to fix request
+    //Params: department code, request code
+    @PostMapping("/tchc/assign-request")
+    public ResponseEntity assignRequestForDepartment(@RequestParam String department,@RequestParam String request){
+        AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(EnumRole.TCHC.toString().equals(account.getRole())){
+            Department department1 = departmentService.findByCode(department);
+            if(department1 == null || department1.getType() != -1){
+                return new ResponseEntity("Wrong code department", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                requestService.assignRequestForDepartment(department1, request);
+                return new ResponseEntity("success",HttpStatus.OK);
+            }
+        }else {
+            return new ResponseEntity("Permission denied",HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    //Fixer complete fix request and finish request
+    //Params: request code
+    @PostMapping("/fixer-finish-request")
+    public ResponseEntity fixerFinishReques(@RequestParam String request)
+    {
+        AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(EnumRole.FIXER.equals(account.getRole())){
+            Request request1 = requestService.findRequestByCode(request);
+            if(request1 == null){
+                return new ResponseEntity("Wrong code request", HttpStatus.BAD_REQUEST);
+            }
+            else {
+                requestService.finishRequestByFixer(request1);
+                return new ResponseEntity("success", HttpStatus.OK);
+            }
+        }
+        else {
+            return new ResponseEntity("Permission denied",HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    //Get all request finish
+    @GetMapping("/get-all-request-finish")
+    public ResponseEntity<?> getAllRequestFinish() {
+        AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (EnumRole.TCHC.equals(account.getRole())) {
+            return (ResponseEntity<?>) requestService.findRequestFinshed();
+        } else {
+            return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

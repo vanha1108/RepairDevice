@@ -5,5 +5,5 @@ package com.company.constant;
  * 3:39 PM 4/28/2021
  */
 public enum EnumRole {
-    DIRECTOR,MANAGER,EMPLOYEE,TCHC;
+    DIRECTOR,MANAGER,EMPLOYEE,TCHC,FIXER
 }

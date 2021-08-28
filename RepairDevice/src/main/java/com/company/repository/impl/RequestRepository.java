@@ -61,4 +61,11 @@ public class RequestRepository implements IRequestRepository {
         List<Request> lst = query.getResultList();
         return lst;
     }
+
+    @Override
+    public List<Request> findAllRequestFinished() {
+        Query query = entityManager.createQuery("select r from Request r where  r.status= 'FINISHED'");
+        List<Request> lst = query.getResultList();
+        return lst;
+    }
 }
