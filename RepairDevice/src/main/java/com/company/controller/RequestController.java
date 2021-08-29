@@ -209,7 +209,7 @@ public class RequestController {
     public ResponseEntity fixerFinishReques(@RequestParam String request)
     {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(EnumRole.FIXER.equals(account.getRole())){
+        if(EnumRole.FIXER.toString().equals(account.getRole())){
             Request request1 = requestService.findRequestByCode(request);
             if(request1 == null){
                 return new ResponseEntity("Wrong code request", HttpStatus.BAD_REQUEST);
@@ -226,10 +226,10 @@ public class RequestController {
 
     //Get all request finish
     @GetMapping("/get-all-request-finish")
-    public ResponseEntity<?> getAllRequestFinish() {
+    public ResponseEntity<List<Request>> getAllRequestFinish() {
         AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (EnumRole.TCHC.equals(account.getRole())) {
-            return (ResponseEntity<?>) requestService.findRequestFinshed();
+        if (EnumRole.TCHC.toString().equals(account.getRole())) {
+            return new ResponseEntity<List<Request>> (requestService.findRequestFinshed(),HttpStatus.OK);
         } else {
             return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
         }
@@ -238,10 +238,10 @@ public class RequestController {
     //Get all request need to fix
     //Role: fixer
     @GetMapping("/get-all-request-fixing")
-    public ResponseEntity<?> getAllRequestFixing(){
+    public ResponseEntity<List<Request>> getAllRequestFixing(){
         AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (EnumRole.FIXER.equals(account.getRole())) {
-            return (ResponseEntity<?>) requestService.findRequestFixing(account.getDepartment().getCode());
+        if (EnumRole.FIXER.toString().equals(account.getRole())) {
+            return new ResponseEntity<> (requestService.findRequestFixing(account.getDepartment().getCode()),HttpStatus.OK);
         } else {
             return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
         }

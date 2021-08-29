@@ -71,7 +71,7 @@ public class RequestRepository implements IRequestRepository {
 
     @Override
     public List<Request> findAllRequestFixing(String code) {
-        Query query = entityManager.createQuery("select r from Request r where  r.status= 'FIXING' and r.department =:code");
+        Query query = entityManager.createQuery("select r from Request r where  r.status= 'FIXING' and r.assign =:code");
         query.setParameter("code", code);
         List<Request> lst = query.getResultList();
         return lst;
