@@ -246,4 +246,25 @@ public class RequestController {
             return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/get-all-request-faild-by-employee")
+    public ResponseEntity<List<Request>> getAllRequestFail(){
+        AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (EnumRole.EMPLOYEE.toString().equals(account.getRole())) {
+            return new ResponseEntity<> (requestService.findRequestFaild(account.getDepartment().getCode()),HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("/resend/{code}")
+    public ResponseEntity resendRequestToManager(@PathVariable("code") String code){
+        Request request = requestService.findRequestByCode(code);
+        if(EnumStatus.FAILED.toString().equals(request.getStatus())){
+            return new ResponseEntity(requestService.resendRequestToManager(request),HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity("This request not faild type", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

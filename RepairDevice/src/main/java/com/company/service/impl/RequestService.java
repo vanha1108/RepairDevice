@@ -12,8 +12,10 @@ import com.company.service.IAccountService;
 import com.company.service.IRequestService;
 import com.company.storage.UserStorage;
 import com.lowagie.text.DocumentException;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -100,7 +102,6 @@ public class RequestService implements IRequestService {
         requestSource.setReason(requestUpdate.getReason());
         requestSource.setLastModifiedDate(new Date());
         requestSource.setModifiedBy(accountUserDetail.getAccountCode());
-        requestSource.setStatus(EnumStatus.WAIT_MANAGER.toString());
         requestRepository.updateRequest(requestSource);
 
         sendSocketMessage(requestSource,1,"update request",200);//goi gui tin nhan socket
@@ -195,6 +196,23 @@ public class RequestService implements IRequestService {
     @Override
     public List<Request> findRequestFixing(String code) {
         return requestRepository.findAllRequestFixing(code);
+    }
+
+    @Override
+    public List<Request> findRequestFaild(String code) {
+        return requestRepository.findAllRequestFaild(code);
+    }
+
+    @Override
+    public Request resendRequestToManager(Request request) {
+        AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setStatus(EnumStatus.WAIT_MANAGER.toString());
+        request.setLastModifiedDate(new Date());
+        request.setModifiedBy(account.getAccountCode());
+        requestRepository.updateRequest(request);
+
+        sendSocketMessage(request,1,"update request",200);//goi gui tin nhan socket
+        return request;
     }
 
     //Gửi thông tin thay đổi data đến đích đến sắp tới

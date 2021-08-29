@@ -1,7 +1,5 @@
 package com.company.repository;
 
-import com.company.entities.Account;
-import com.company.entities.Department;
 import com.company.entities.Request;
 
 import java.io.Serializable;
@@ -19,4 +17,6 @@ public interface IRequestRepository extends Serializable {
     List<Request> findAllRequestFinished();
 
     List<Request> findAllRequestFixing(String code);
+
+    List<Request> findAllRequestFaild(String code);
 }

@@ -1,6 +1,5 @@
 package com.company.repository.impl;
 
-import com.company.entities.Department;
 import com.company.entities.Request;
 import com.company.repository.IRequestRepository;
 import org.springframework.stereotype.Repository;
@@ -72,6 +71,14 @@ public class RequestRepository implements IRequestRepository {
     @Override
     public List<Request> findAllRequestFixing(String code) {
         Query query = entityManager.createQuery("select r from Request r where  r.status= 'FIXING' and r.assign =:code");
+        query.setParameter("code", code);
+        List<Request> lst = query.getResultList();
+        return lst;
+    }
+
+    @Override
+    public List<Request> findAllRequestFaild(String code) {
+        Query query = entityManager.createQuery("select r from Request r where  r.status= 'FAILED' and r.department =:code");
         query.setParameter("code", code);
         List<Request> lst = query.getResultList();
         return lst;

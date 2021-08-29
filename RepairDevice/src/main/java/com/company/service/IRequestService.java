@@ -37,4 +37,8 @@ public interface IRequestService extends Serializable{
     List<Request> findRequestFinshed();
 
     List<Request> findRequestFixing(String code);
+
+    List<Request> findRequestFaild(String code);
+
+    Request resendRequestToManager(Request request);
 }
