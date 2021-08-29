@@ -27,6 +27,28 @@ public class Request {
     @Column
     private String status;
 
+    @Column
+    private String department;
+
+    @Column
+    private String assign;
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getAssign() {
+        return assign;
+    }
+
+    public void setAssign(String assign) {
+        this.assign = assign;
+    }
+
     @Column(name="created_date")
     private Date createdDate;
 

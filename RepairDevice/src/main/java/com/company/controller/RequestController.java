@@ -187,8 +187,12 @@ public class RequestController {
         AccountUserDetail account = (AccountUserDetail)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(EnumRole.TCHC.toString().equals(account.getRole())){
             Department department1 = departmentService.findByCode(department);
+            Request request1 = requestService.findRequestByCode(request);
             if(department1 == null || department1.getType() != -1){
                 return new ResponseEntity("Wrong code department", HttpStatus.BAD_REQUEST);
+            }
+            else if(request1==null){
+                return new ResponseEntity("Wrong code request", HttpStatus.BAD_REQUEST);
             }
             else {
                 requestService.assignRequestForDepartment(department1, request);
@@ -226,6 +230,18 @@ public class RequestController {
         AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (EnumRole.TCHC.equals(account.getRole())) {
             return (ResponseEntity<?>) requestService.findRequestFinshed();
+        } else {
+            return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    //Get all request need to fix
+    //Role: fixer
+    @GetMapping("/get-all-request-fixing")
+    public ResponseEntity<?> getAllRequestFixing(){
+        AccountUserDetail account = (AccountUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (EnumRole.FIXER.equals(account.getRole())) {
+            return (ResponseEntity<?>) requestService.findRequestFixing(account.getDepartment().getCode());
         } else {
             return new ResponseEntity("Permission denied", HttpStatus.UNAUTHORIZED);
         }

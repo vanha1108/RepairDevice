@@ -17,4 +17,6 @@ public interface IRequestRepository extends Serializable {
 
 
     List<Request> findAllRequestFinished();
+
+    List<Request> findAllRequestFixing(String code);
 }

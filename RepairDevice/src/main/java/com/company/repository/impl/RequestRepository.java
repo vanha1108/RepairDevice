@@ -68,4 +68,12 @@ public class RequestRepository implements IRequestRepository {
         List<Request> lst = query.getResultList();
         return lst;
     }
+
+    @Override
+    public List<Request> findAllRequestFixing(String code) {
+        Query query = entityManager.createQuery("select r from Request r where  r.status= 'FIXING' and r.department =:code");
+        query.setParameter("code", code);
+        List<Request> lst = query.getResultList();
+        return lst;
+    }
 }

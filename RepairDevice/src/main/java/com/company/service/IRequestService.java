@@ -4,7 +4,6 @@ import com.company.configs.AccountUserDetail;
 import com.company.entities.Department;
 import com.company.entities.Request;
 import com.lowagie.text.DocumentException;
-import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,4 +35,6 @@ public interface IRequestService extends Serializable{
     void finishRequestByFixer(Request request1);
 
     List<Request> findRequestFinshed();
+
+    List<Request> findRequestFixing(String code);
 }

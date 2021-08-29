@@ -80,11 +80,13 @@ public class Main implements CommandLineRunner {
             department.setType(-1);
             departmentRepository.save(department);
 
+            System.out.println("Department id");
+            System.out.println(department.getId());
             Account manager = new Account();
             manager.setCode(UUID.randomUUID().toString());
             manager.setUsername("managerRoomFix1");
             manager.setPassword(passwordEncoder.encode("managerRoomFix1"));
-            manager.setRoles(EnumRole.MANAGER.toString());
+            manager.setRoles(EnumRole.FIXER.toString());
             manager.setDepartment(department);
             accountRepository.save(manager);
 
@@ -94,11 +96,13 @@ public class Main implements CommandLineRunner {
             department2.setType(-1);
             departmentRepository.save(department2);
 
+            System.out.println("Department id");
+            System.out.println(department2.getId());
             Account manager2 = new Account();
             manager2.setCode(UUID.randomUUID().toString());
             manager2.setUsername("managerRoomFix2");
             manager2.setPassword(passwordEncoder.encode("managerRoomFix2"));
-            manager2.setRoles(EnumRole.MANAGER.toString());
+            manager2.setRoles(EnumRole.FIXER.toString());
             manager2.setDepartment(department2);
             accountRepository.save(manager2);
         }

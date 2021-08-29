@@ -13,7 +13,6 @@ import com.company.service.IRequestService;
 import com.company.storage.UserStorage;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -52,6 +51,7 @@ public class RequestService implements IRequestService {
                }
            }while (requestBody.getCode().equals(""));
 
+           requestBody.setDepartment(accountUserDetail.getDepartment().getCode());
            requestBody.setStatus(EnumStatus.WAIT_MANAGER.toString());
            requestBody.setCreatedDate(new Date());
            requestBody.setLastModifiedDate(new Date());
@@ -163,10 +163,12 @@ public class RequestService implements IRequestService {
         if(account != null){
             Request request1 = requestRepository.findRequestByCode(request);
             request1.setStatus(EnumStatus.FIXING.toString());
+            request1.setAssign(department.getCode());
             requestRepository.updateRequest(request1);
             try{
 
             }catch (Exception ex){
+                System.out.println(ex);
                 simpMessagingTemplate.convertAndSend("/data/request/"+account.getCode(),"new request assgin");
             }
         }
@@ -188,6 +190,11 @@ public class RequestService implements IRequestService {
     @Override
     public List<Request> findRequestFinshed() {
         return requestRepository.findAllRequestFinished();
+    }
+
+    @Override
+    public List<Request> findRequestFixing(String code) {
+        return requestRepository.findAllRequestFixing(code);
     }
 
     //Gửi thông tin thay đổi data đến đích đến sắp tới
